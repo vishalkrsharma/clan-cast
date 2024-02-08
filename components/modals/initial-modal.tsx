@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import FileUpload from '@/components/file-upload';
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -58,7 +59,7 @@ const InitialModal = () => {
           >
             <div className='space-y-8 px-6'>
               <div className='flex items-center justify-center text-center'>
-                {/* <FormField
+                <FormField
                   control={form.control}
                   name='imageUrl'
                   render={({ field }) => (
@@ -72,9 +73,8 @@ const InitialModal = () => {
                       </FormControl>
                     </FormItem>
                   )}
-                /> */}
+                />
               </div>
-
               <FormField
                 control={form.control}
                 name='name'
