@@ -14,6 +14,7 @@ const ModeToggle = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
+          className='bg-transparent border-0'
           variant='outline'
           size='icon'
         >
