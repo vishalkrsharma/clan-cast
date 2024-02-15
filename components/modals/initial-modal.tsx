@@ -1,10 +1,10 @@
 'use client';
 
-import * as z from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -24,6 +24,7 @@ const formSchema = z.object({
 
 const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -43,6 +44,7 @@ const InitialModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       await axios.post('/api/servers', values);
+
       form.reset();
       router.refresh();
       window.location.reload();
@@ -51,11 +53,13 @@ const InitialModal = () => {
     }
   };
 
-  if (!isMounted) return null;
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <Dialog open>
-      <DialogContent className='bg-white text-black p-0 overflow-hidden dark:text-white dark:bg-[#313338]'>
+      <DialogContent className='bg-white text-black p-0 overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>Customize your server</DialogTitle>
           <DialogDescription className='text-center text-zinc-500'>
@@ -85,16 +89,17 @@ const InitialModal = () => {
                   )}
                 />
               </div>
+
               <FormField
                 control={form.control}
                 name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70 dark:text-white'>Server name</FormLabel>
+                    <FormLabel className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'>Server name</FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
-                        className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0 dark:bg-white'
+                        className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
                         placeholder='Enter server name'
                         {...field}
                       />
@@ -104,7 +109,7 @@ const InitialModal = () => {
                 )}
               />
             </div>
-            <DialogFooter className='bg-gray-100 px-6 py-4 dark:bg-[#1E1F22]'>
+            <DialogFooter className='bg-gray-100 px-6 py-4'>
               <Button
                 variant='primary'
                 disabled={isLoading}
