@@ -21,7 +21,9 @@ const MemberIdPage = async ({
 }) => {
   const profile = await currentProfile();
 
-  if (!profile) return redirectToSignIn();
+  if (!profile) {
+    return redirectToSignIn();
+  }
 
   const currentMember = await db.member.findFirst({
     where: {
@@ -33,13 +35,18 @@ const MemberIdPage = async ({
     },
   });
 
-  if (!currentMember) return redirect('/');
+  if (!currentMember) {
+    return redirect('/');
+  }
 
   const conversation = await getOrCreateConversation(currentMember.id, params.memberId);
 
-  if (!conversation) return redirect(`/servers/${params.serverId}`);
+  if (!conversation) {
+    return redirect(`/servers/${params.serverId}`);
+  }
 
   const { memberOne, memberTwo } = conversation;
+
   const otherMember = memberOne.profileId === profile.id ? memberTwo : memberOne;
 
   return (
@@ -56,6 +63,31 @@ const MemberIdPage = async ({
           video={true}
           audio={true}
         />
+      )} */}
+      {/* {!searchParams.video && (
+        <>
+          <ChatMessages
+            member={currentMember}
+            name={otherMember.profile.name}
+            chatId={conversation.id}
+            type='conversation'
+            apiUrl='/api/direct-messages'
+            paramKey='conversationId'
+            paramValue={conversation.id}
+            socketUrl='/api/socket/direct-messages'
+            socketQuery={{
+              conversationId: conversation.id,
+            }}
+          />
+          <ChatInput
+            name={otherMember.profile.name}
+            type='conversation'
+            apiUrl='/api/socket/direct-messages'
+            query={{
+              conversationId: conversation.id,
+            }}
+          />
+        </>
       )} */}
     </div>
   );
